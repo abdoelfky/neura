@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:neura/core/common/app_images.dart';
 
+import '../../core/common/app_colors.dart';
 import 'chatBotWebView.dart';
 
 class ChatScreen extends StatelessWidget {
@@ -9,6 +10,7 @@ class ChatScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.backgroundColor,
       body: Padding(
         padding: const EdgeInsets.only(top: 80.0, left: 15.0, right: 15),
         child: Column(

@@ -33,9 +33,10 @@ class VerificationController extends StateNotifier<AsyncValue<void>> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Verification successful!')),
       );
+      isCameFromRegister=true;
       Navigator.pushReplacementNamed(
         context,
-        isResetPassword ? AppRoutes.reset : AppRoutes.login,
+        isResetPassword ? AppRoutes.reset : AppRoutes.main,
       );
     } on DioError catch (e) {
       final errorMsg = e.response?.data['message'] ?? 'Verification failed';

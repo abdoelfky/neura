@@ -8,6 +8,7 @@ class SharedPrefs {
   static String userName = '';
   static String userEmail = '';
   static String userToken = '';
+  static String id = '';
   static bool rememberMe = false;
   static bool onboardingSeen = false;
 
@@ -16,6 +17,7 @@ class SharedPrefs {
     userName = prefs.getString('user_name') ?? '';
     userEmail = prefs.getString('user_email') ?? '';
     userToken = prefs.getString('user_token') ?? '';
+    id = prefs.getString('user_id') ?? '';
     rememberMe = prefs.getBool('remember_me') ?? false;
     onboardingSeen = prefs.getBool('onboarding_seen') ?? false;
   }
@@ -37,9 +39,11 @@ class SharedPrefs {
     userName = user.userName;
     userEmail = user.email;
     userToken = user.token;
+    id = user.id;
     await prefs.setString('user_email', user.email);
     await prefs.setString('user_name', user.userName);
     await prefs.setString('user_token', user.token);
+    await prefs.setString('user_id', user.id);
   }
 
   static Future<void> clearUser() async {
@@ -47,9 +51,11 @@ class SharedPrefs {
     await prefs.remove('user_email');
     await prefs.remove('user_name');
     await prefs.remove('user_token');
+    await prefs.remove('user_id');
     userName = '';
     userEmail = '';
     userToken = '';
+    id = '';
   }
 
   static Future<String> get userNameAsync async => (await _prefs).getString('user_name') ?? '';

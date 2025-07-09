@@ -1,15 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:neura/core/common/app_colors.dart';
 import 'package:neura/core/common/app_images.dart';
 import 'package:neura/core/common/routes.dart';
 import 'package:neura/core/storage/shared_prefs.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends ConsumerStatefulWidget {
   const ProfileScreen({super.key});
 
   @override
+  ConsumerState<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends ConsumerState<ProfileScreen> {
+  @override
+  void initState() {
+    super.initState();
+
+  }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
         title: const Text(
           'My Profile',
@@ -38,48 +50,67 @@ class ProfileScreen extends StatelessWidget {
               style: const TextStyle(color: Colors.grey),
             ),
             const SizedBox(height: 24),
-            ListTile(
-              leading: Icon(Icons.folder, color: AppColors.primary),
-              title: const Text('Your Records'),
-              trailing: const Icon(Icons.keyboard_arrow_right),
+            buildMenuItem(
+              icon: Icons.folder,
+              title: 'Your Records',
+              onTap: () => Navigator.pushNamed(context, AppRoutes.records),
+            ),
+            buildMenuItem(
+              icon: Icons.settings,
+              title: 'Settings',
+              onTap: () => Navigator.pushNamed(context, AppRoutes.settings),
+            ),
+            buildMenuItem(
+              icon: Icons.info,
+              title: 'About app',
               onTap: () {},
             ),
-            ListTile(
-              leading: Icon(Icons.settings, color: AppColors.primary),
-              title: const Text('Settings'),
-              trailing: const Icon(Icons.keyboard_arrow_right),
-              onTap: () {
-                Navigator.pushNamed(context, AppRoutes.settings);
-              },
+            buildMenuItem(
+              icon: Icons.notifications,
+              title: 'Notification',
+              onTap: () =>
+                  Navigator.pushNamed(context, AppRoutes.notifications),
             ),
-            ListTile(
-              leading: Icon(Icons.info_outline, color: AppColors.primary),
-              title: const Text('About app'),
-              trailing: const Icon(Icons.keyboard_arrow_right),
-              onTap: () {},
-            ),
-            ListTile(
-              leading: Icon(Icons.notifications, color: AppColors.primary),
-              title: const Text('Notification'),
-              trailing: const Icon(Icons.keyboard_arrow_right),
-              onTap: () {
-                Navigator.pushNamed(context, AppRoutes.notifications);
-
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.dark_mode, color: AppColors.primary),
-              title: const Text('Dark'),
-              trailing: Switch(
-                inactiveThumbColor: AppColors.primary,
-                value: false,
-                onChanged: (value) {},
+            Container(
+              decoration: tileDecoration,
+              margin: const EdgeInsets.symmetric(vertical: 4),
+              child: ListTile(
+                leading: Icon(Icons.dark_mode, color: AppColors.primary),
+                title: const Text('Dark',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+                trailing: Switch(
+                  inactiveThumbColor: AppColors.primary,
+                  value: false,
+                  onChanged: (value) {},
+                ),
+                onTap: () {},
               ),
-              onTap: () {},
-            ),
+            )
           ],
         ),
       ),
     );
   }
+}
+
+final tileDecoration = BoxDecoration(
+  color: Colors.white,
+  borderRadius: BorderRadius.circular(10),
+);
+
+Widget buildMenuItem(
+    {required IconData icon,
+    required String title,
+    Widget? trailing,
+    required VoidCallback onTap}) {
+  return Container(
+    decoration: tileDecoration,
+    margin: const EdgeInsets.symmetric(vertical: 4), // spacing between tiles
+    child: ListTile(
+      leading: Icon(icon, color: AppColors.primary),
+      title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
+      trailing: trailing ?? const Icon(Icons.keyboard_arrow_right, size: 30),
+      onTap: onTap,
+    ),
+  );
 }

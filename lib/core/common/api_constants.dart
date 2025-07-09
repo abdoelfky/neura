@@ -14,4 +14,8 @@ class ApiConstants {
   static const String deleteAccount = 'profile/delete-account';
   static const String myScans = 'scan/my-scans';
   static const String deleteScan = 'scan/delete';
+  static const String updateGender = 'admin/users/gender';
+  static const String updateBirth = 'admin/users/birth-date';
 }
+
+bool isCameFromRegister = false;

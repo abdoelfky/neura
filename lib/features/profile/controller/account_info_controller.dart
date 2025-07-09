@@ -1,5 +1,3 @@
-// features/profile/controller/profile_controller.dart
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:neura/core/storage/shared_prefs.dart';
 import '../data/account_info_repo.dart';

@@ -1,9 +1,11 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:neura/core/common/api_constants.dart';
 import 'package:neura/core/common/app_colors.dart';
 import 'package:neura/core/common/app_images.dart';
 import 'package:neura/core/network/dio_helper.dart';
+import 'package:neura/features/auth/screens/showGenderAndDOBPopup.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -38,7 +40,8 @@ class _HomeScreenState extends State<HomeScreen> {
       );
 
       final data = response.data['data'];
-      final result = 'Label: ${data['label']}\nProbability: ${data['probability']}';
+      final result =
+          'Label: ${data['label']}\nProbability: ${data['probability']}';
       setState(() {
         _diagnosisResult = result;
       });
@@ -54,8 +57,20 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (isCameFromRegister) {
+      Future.microtask(() {
+        showGenderAndDOBPopup(context);
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -92,7 +107,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     icon: const Icon(Icons.photo_camera, color: Colors.white),
                     label: const Text(
                       'Take photo',
-                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
                     ),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.primary,
@@ -108,10 +124,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 Expanded(
                   child: ElevatedButton.icon(
                     onPressed: () => _pickImage(ImageSource.gallery),
-                    icon: const Icon(Icons.file_upload_outlined, color: Colors.white),
+                    icon: const Icon(Icons.file_upload_outlined,
+                        color: Colors.white),
                     label: const Text(
                       'Upload photo',
-                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
                     ),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.primary,
@@ -148,10 +166,10 @@ class _HomeScreenState extends State<HomeScreen> {
               child: _isLoading
                   ? const Center(child: CircularProgressIndicator())
                   : Text(
-                _diagnosisResult ??
-                    'No Diagnosis Available. Please Upload Or Capture An X-Ray.',
-                style: const TextStyle(fontSize: 14),
-              ),
+                      _diagnosisResult ??
+                          'No Diagnosis Available. Please Upload Or Capture An X-Ray.',
+                      style: const TextStyle(fontSize: 14),
+                    ),
             ),
           ],
         ),

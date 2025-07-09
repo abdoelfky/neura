@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:dio/dio.dart';
 import 'package:neura/core/common/routes.dart';
+import 'package:neura/core/storage/shared_prefs.dart';
 
 import 'auth_controller.dart';
 
@@ -27,7 +28,8 @@ class SignupController extends StateNotifier<AsyncValue<void>> {
   }) async {
     state = const AsyncValue.loading();
     try {
-      await ref.read(authRepositoryProvider).registerUser(
+
+      final authModel = await ref.read(authRepositoryProvider).registerUser(
         firstName: firstName,
         lastName: lastName,
         userName: userName,
@@ -36,6 +38,7 @@ class SignupController extends StateNotifier<AsyncValue<void>> {
         password: password,
         confirmPassword: confirmPassword,
       );
+      await SharedPrefs.saveUser(authModel);
 
       state = const AsyncValue.data(null);
       ScaffoldMessenger.of(context).showSnackBar(

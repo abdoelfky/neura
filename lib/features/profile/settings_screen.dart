@@ -22,7 +22,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     return Scaffold(
       appBar: AppBar(
         leading: const BackButton(),
-        title: const Text('Settings', style: TextStyle(fontWeight: FontWeight.bold)),
+        title: const Text('Settings',
+            style: TextStyle(fontWeight: FontWeight.bold)),
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
@@ -31,11 +32,27 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           _buildTile('Account info', onTap: () {
             Navigator.pushNamed(context, AppRoutes.info);
           }),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            child: Divider(),
+          ),
           _buildTile('Change password', onTap: () {
             Navigator.pushNamed(context, AppRoutes.changePassword);
           }),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            child: Divider(),
+          ),
           _buildTile('Delete account', onTap: _showDeleteAccountDialog),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            child: Divider(),
+          ),
           _buildTile('Log out', onTap: _showLogoutDialog),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            child: Divider(),
+          ),
           SwitchListTile.adaptive(
             title: const Text('Notification'),
             value: notificationsEnabled,
@@ -72,7 +89,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               Navigator.pushNamedAndRemoveUntil(
                 context,
                 AppRoutes.login,
-                    (route) => false,
+                (route) => false,
               );
             },
             child: const Text('Log out'),
@@ -87,7 +104,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
       context: context,
       builder: (ctx) => AlertDialog(
         title: const Text('Delete Account'),
-        content: const Text('Are you sure you want to delete your account? This action cannot be undone.'),
+        content: const Text(
+            'Are you sure you want to delete your account? This action cannot be undone.'),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(),
@@ -99,7 +117,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
 
               final token = SharedPrefs.userToken;
               try {
-                await ref.read(deleteAccountControllerProvider.notifier).deleteAccount(token: token);
+                await ref
+                    .read(deleteAccountControllerProvider.notifier)
+                    .deleteAccount(token: token);
 
                 await SharedPrefs.clearUser();
 
@@ -110,7 +130,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 Navigator.pushNamedAndRemoveUntil(
                   context,
                   AppRoutes.login,
-                      (route) => false,
+                  (route) => false,
                 );
               } catch (e) {
                 ScaffoldMessenger.of(context).showSnackBar(

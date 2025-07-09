@@ -5,6 +5,8 @@ import 'package:neura/core/network/dio_helper.dart';
 import 'package:neura/core/common/app_images.dart';
 import 'package:neura/core/storage/shared_prefs.dart';
 
+import '../../core/common/app_colors.dart';
+
 class RecordsScreen extends StatefulWidget {
   const RecordsScreen({super.key});
 
@@ -176,6 +178,8 @@ class _RecordsScreenState extends State<RecordsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.backgroundColor,
+
       appBar: AppBar(
         title: const Text(
           'Records',

@@ -17,7 +17,7 @@ class AuthRepository {
     return AuthModel.fromJson(response.data);
   }
 
-  Future<void> registerUser({
+  Future<AuthModel> registerUser({
     required String firstName,
     required String lastName,
     required String userName,
@@ -45,6 +45,8 @@ class AuthRepository {
       );
 
       print('✅ Registration response: ${response.data}');
+      return AuthModel.fromJson(response.data);
+
     } on DioError catch (e) {
       print('❌ DioError response: ${e.response?.data}');
 

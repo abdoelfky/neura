@@ -4,6 +4,7 @@ import 'package:neura/features/notifications/notifications_screen.dart';
 import 'package:neura/features/profile/account_info_screen.dart';
 import 'package:neura/features/profile/change_password_screen.dart';
 import 'package:neura/features/profile/settings_screen.dart';
+import 'package:neura/features/records/records_screen.dart';
 import 'package:neura/features/splash/splash_screen.dart';
 import 'package:neura/features/onboarding/screens/onboarding_screen.dart';
 import 'package:neura/features/auth/screens/login_screen.dart';
@@ -25,6 +26,7 @@ class AppRoutes {
   static const String notifications = '/notifications';
   static const String info = '/info';
   static const String changePassword = '/changePassword';
+  static const String records = '/records';
 
   static Route<dynamic>? generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -38,6 +40,8 @@ class AppRoutes {
         return MaterialPageRoute(builder: (_) => SignupScreen());
       case forget:
         return MaterialPageRoute(builder: (_) => const ForgetPasswordScreen());
+        case records:
+      return MaterialPageRoute(builder: (_) => const RecordsScreen());
       case verification:
         final args = settings.arguments as Map;
         return MaterialPageRoute(
